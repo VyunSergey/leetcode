@@ -10,6 +10,10 @@ object LowestCommonAncestorBinaryTree {
   }
 
   object TreeNode {
+    def apply(value: Int): TreeNode = {
+      new TreeNode(value)
+    }
+
     def apply(value: Int, left: TreeNode, right: TreeNode): TreeNode = {
       val tree = new TreeNode(value)
       tree.left = left
@@ -25,18 +29,18 @@ object LowestCommonAncestorBinaryTree {
           TreeNode(3,
             TreeNode(7, null, null), null),
           TreeNode(4,
-            null, TreeNode(8, null, null))
+            null, TreeNode(8, TreeNode(11, null, null), null))
         ),
         TreeNode(2,
           TreeNode(5,
             TreeNode(9, null, null), null),
           TreeNode(6,
-            null, TreeNode(10, null, null))
+            null, TreeNode(10, null, TreeNode(12, null, null)))
         )
       )
-    val p = TreeNode(9, null, null)
-    val q = TreeNode(10, null, null)
-    val res: TreeNode = lowestCommonAncestor(tree, p, q)
+    val p = Console.in.readLine().toInt
+    val q = Console.in.readLine().toInt
+    val res: TreeNode = lowestCommonAncestor(tree, TreeNode(p), TreeNode(q))
     println(res.value)
   }
 
