@@ -10,6 +10,7 @@ class Fancy() {
   private val mapIdxToVal = mutable.HashMap.empty[Int, BigInteger]
   private val MOD: BigInteger = BigInteger.valueOf((Math.pow(10, 9) + 7).toLong)
 
+  // Extended Euclidean algorithm
   private def xgcd(a: BigInteger, b: BigInteger): Array[BigInteger] = {
     var (x, y) = (a, b)
     var qrem: Array[BigInteger] = new Array[BigInteger](2)
@@ -41,26 +42,35 @@ class Fancy() {
     Array(BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO)
   }
 
+  // Modular multiplicative inverse
   private def modInv(num: BigInteger, base: BigInteger): BigInteger = {
     val Array(a, b, _) = xgcd(num, base)
     if (a.equals(BigInteger.ONE)) b
-    else throw new ArithmeticException(s"xgcd($num, $base) != 1")
+    else throw new ArithmeticException(s"gcd($num, $base) != 1")
   }
 
+  // save `val` in HashMap as
+  // value = [(`val` - add) * (mult^(-1) mod MOD)] mod MOD
+  // in presentation [value * mult + add] mod MOD
   def append(`val`: Int) {
     val inv = modInv(mult, MOD)
-    val value = BigInteger.valueOf(`val`.toLong).subtract(add).multiply(inv)
+    val value = BigInteger.valueOf(`val`.toLong).subtract(add).multiply(inv).remainder(MOD)
     // println(s"i=$i, val=${`val`}, add=$add, mult=$mult, inv=$inv, value=$value")
     mapIdxToVal += (i -> value)
     i += 1
   }
 
+  // new add = [add + inc] mod MOD
+  // in presentation [value * mult + (add + inc)] mod MOD
   def addAll(inc: Int) {
     if (i > 0) {
       add = add.add(BigInteger.valueOf(inc.toLong)).remainder(MOD)
     }
   }
 
+  // new mult = [mult * m] mod MOD
+  // new add = [add * m] mod MOD
+  // in presentation [value * (mult * m) + (add * m)] mod MOD
   def multAll(m: Int) {
     if (i > 0) {
       mult = mult.multiply(BigInteger.valueOf(m.toLong)).remainder(MOD)
@@ -68,6 +78,7 @@ class Fancy() {
     }
   }
 
+  // getting result as [value * mult + add] mod MOD
   def getIndex(idx: Int): Int = {
     mapIdxToVal.get(idx)
       .map { a =>
