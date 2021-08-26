@@ -38,4 +38,20 @@ object BurstBalloons {
     // burst newNums(1)...newNums(n-2), excluding the first one and the last one
     dp(1)(n - 2)
   }
+
+  def maxCoinsRec(nums: Array[Int], sum: Int = 0): Int = {
+    if (nums.length <= 1) sum + nums.headOption.getOrElse(0)
+    else if (nums.length == 2) sum + (nums.head * nums.last + Math.max(nums.head, nums.last))
+    else {
+      nums.indices.map { i =>
+        maxCoinsRec(
+          nums.take(i) ++ nums.drop(i + 1),
+          sum +
+            (if (i > 0) nums(i - 1) else 1) *
+              nums(i) *
+              (if (i < nums.length - 1) nums(i + 1) else 1)
+        )
+      }.max
+    }
+  }
 }
