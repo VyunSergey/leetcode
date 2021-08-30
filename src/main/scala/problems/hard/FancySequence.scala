@@ -3,7 +3,7 @@ package problems.hard
 import java.math.BigInteger
 import scala.collection.mutable
 
-class Fancy() {
+class FancySequence() {
   private var i: Int = 0
   private var add: BigInteger = BigInteger.ZERO
   private var mult: BigInteger = BigInteger.ONE
@@ -52,7 +52,7 @@ class Fancy() {
   // save `val` in HashMap as
   // value = [(`val` - add) * (mult^(-1) mod MOD)] mod MOD
   // in presentation [value * mult + add] mod MOD
-  def append(`val`: Int) {
+  def append(`val`: Int): Unit = {
     val inv = modInv(mult, MOD)
     val value = BigInteger.valueOf(`val`.toLong).subtract(add).multiply(inv).remainder(MOD)
     // println(s"i=$i, val=${`val`}, add=$add, mult=$mult, inv=$inv, value=$value")
@@ -62,7 +62,7 @@ class Fancy() {
 
   // new add = [add + inc] mod MOD
   // in presentation [value * mult + (add + inc)] mod MOD
-  def addAll(inc: Int) {
+  def addAll(inc: Int): Unit = {
     if (i > 0) {
       add = add.add(BigInteger.valueOf(inc.toLong)).remainder(MOD)
     }
@@ -71,7 +71,7 @@ class Fancy() {
   // new mult = [mult * m] mod MOD
   // new add = [add * m] mod MOD
   // in presentation [value * (mult * m) + (add * m)] mod MOD
-  def multAll(m: Int) {
+  def multAll(m: Int): Unit = {
     if (i > 0) {
       mult = mult.multiply(BigInteger.valueOf(m.toLong)).remainder(MOD)
       add = add.multiply(BigInteger.valueOf(m.toLong)).remainder(MOD)
@@ -94,7 +94,7 @@ class Fancy() {
 object FancySequence {
   def main(args: Array[String]): Unit = {
     var res = 0
-    val fancy: Fancy = new Fancy()
+    val fancy: FancySequence = new FancySequence()
     fancy.append(3)
     fancy.append(7)
     fancy.multAll(4)
