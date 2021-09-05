@@ -25,6 +25,15 @@ package object common {
     res
   }
 
+  def timedNTimes[A](n: Int)(block: => A): A = {
+    val (res, sumTm) = (0 until n).foldLeft(time(block)) { case ((_, tm), _) =>
+      val (newRes, newTm) = time(block)
+      (newRes, tm + newTm)
+    }
+    println(f"Elapsed time: ${nanoToTimestamp(sumTm / n)} | ${sumTm / n}ns")
+    res
+  }
+
   def profile[A, B](fun1: A => B, fun2: A => B)(data: List[A])
                    (implicit eq: Equiv[B]): List[(Boolean, Long, Long)] = {
     data.map { a =>
