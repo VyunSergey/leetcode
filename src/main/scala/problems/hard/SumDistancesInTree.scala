@@ -18,6 +18,40 @@ object SumDistancesInTree {
   }
 
   def sumOfDistancesInTree(n: Int, edges: Array[Array[Int]]): Array[Int] = {
+    val graph = Vector.fill(n)(mutable.HashSet.empty[Int])
+    val ans = Array.fill(n)(0)
+    val count = Array.fill(n)(1)
+
+    def dfs(node: Int, parent: Int): Unit = {
+      graph(node).foreach { child =>
+        if (child != parent) {
+          dfs(child, node)
+          count(node) += count(child)
+          ans(node) += ans(child) + count(child)
+        }
+      }
+    }
+
+    def dfs2(node: Int, parent: Int): Unit = {
+      graph(node).foreach { child =>
+        if (child != parent) {
+          ans(child) = ans(node) - count(child) + n - count(child)
+          dfs2(child, node)
+        }
+      }
+    }
+
+    edges.foreach { case Array(a, b) =>
+      graph(a) += b
+      graph(b) += a
+    }
+
+    dfs(0, -1)
+    dfs2(0, -1)
+    ans
+  }
+
+  def sumOfDistancesInTree2(n: Int, edges: Array[Array[Int]]): Array[Int] = {
     if (edges.isEmpty) return Array(0)
     else if (edges.length == 1) return Array(1, 1)
 
