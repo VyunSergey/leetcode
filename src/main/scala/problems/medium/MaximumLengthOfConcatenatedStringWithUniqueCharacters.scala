@@ -12,9 +12,7 @@ object MaximumLengthOfConcatenatedStringWithUniqueCharacters {
   def maxLength(arr: List[String]): Int = {
     val optSet = mutable.HashSet.empty[Int]
     arr.foreach(word => wordToBitSet(optSet, word))
-
-    val optArr = optSet.toArray
-    dfs(optArr, 0, 0)
+    dfs(optSet.toArray, 0, 0)
   }
 
   def wordToBitSet(optSet: mutable.HashSet[Int], word: String): Unit = {
