@@ -15,7 +15,8 @@ object TicTacToeGame {
     val size = 3
     val board = Array.fill(size)(Array.fill(size)(0))
 
-    moves.foldLeft((Option.empty[String], board)) { case ((wnr, brd), Array(row, col)) =>
+    moves.foldLeft((Option.empty[String], board)) { case ((wnr, brd), arr) =>
+      val Array(row, col) = arr.take(2)
       (wnr orElse {
         brd(row)(col) = if (i % 2 == 0) 1 else -1
         // println(show(brd))

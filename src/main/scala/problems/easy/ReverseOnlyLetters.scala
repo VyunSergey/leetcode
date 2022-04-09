@@ -10,7 +10,8 @@ object ReverseOnlyLetters {
   def reverseOnlyLetters(s: String): String = {
     s.zipWithIndex
       .foldLeft(List((List.empty[(Char, Int)], List.empty[(Char, Int)]))) {
-        case (List((letters, other)), (chr, i)) =>
+        case (lists, (chr, i)) =>
+          val List((letters, other)) = lists
           if (chr.isLetter) List(((chr, i) :: letters, other))
           else List((letters, (chr, i) :: other))
       }.map { case (letters, other) =>

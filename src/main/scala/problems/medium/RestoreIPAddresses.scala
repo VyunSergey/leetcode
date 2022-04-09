@@ -15,14 +15,15 @@ object RestoreIPAddresses {
 
     val buf = mutable.ListBuffer.empty[String]
 
-    Set.range(1, len).subsets(3).foreach { ids =>
-      val List(a, b, c): List[Int] = ids.toList.sorted
-      val s1 = s.slice(0, a)
-      val s2 = s.slice(a, b)
-      val s3 = s.slice(b, c)
-      val s4 = s.slice(c, s.length)
-      val ls = List(s1, s2, s3, s4)
-      if (valid(ls)) buf += ls.mkString(".")
+    Set.range(1, len).subsets(3).map(_.toList.sorted).foreach {
+      case List(a, b, c) =>
+        val s1 = s.slice(0, a)
+        val s2 = s.slice(a, b)
+        val s3 = s.slice(b, c)
+        val s4 = s.slice(c, s.length)
+        val ls = List(s1, s2, s3, s4)
+        if (valid(ls)) buf += ls.mkString(".")
+      case _ =>
     }
     buf.result
   }
@@ -36,5 +37,4 @@ object RestoreIPAddresses {
         }
     }
   }
-
 }
