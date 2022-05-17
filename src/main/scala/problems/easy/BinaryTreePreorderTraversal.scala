@@ -1,5 +1,7 @@
 package problems.easy
 
+import problems.common.TreeNode
+
 object BinaryTreePreorderTraversal {
   def main(args: Array[String]): Unit = {
     val tree = TreeNode(1,

@@ -1,5 +1,7 @@
 package problems.medium
 
+import problems.common.TreeNode
+
 object BinaryTreeRightSideView {
   def main(args: Array[String]): Unit = {
     val tree = TreeNode(5,

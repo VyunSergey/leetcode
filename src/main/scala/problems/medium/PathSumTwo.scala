@@ -1,5 +1,7 @@
 package problems.medium
 
+import problems.common.TreeNode
+
 import scala.annotation.tailrec
 import scala.collection.mutable
 
