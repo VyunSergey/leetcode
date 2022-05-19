@@ -1,15 +1,8 @@
 package problems.easy
 
+import problems.common.TreeNode
+
 object ConvertSortedArrayToBinarySearchTree {
-
-  class TreeNode(_value: Int = 0,
-                 _left: TreeNode = null,
-                 _right: TreeNode = null) {
-    var value: Int = _value
-    var left: TreeNode = _left
-    var right: TreeNode = _right
-  }
-
   def main(args: Array[String]): Unit = {
     val nums: Array[Int] = Console.in.readLine().split(" ").map(_.toInt)
     val res: TreeNode = sortedArrayToBST(nums)

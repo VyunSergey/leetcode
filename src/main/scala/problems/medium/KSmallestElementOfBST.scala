@@ -1,20 +1,9 @@
 package problems.medium
 
+import problems.common.TreeNode
 import scala.annotation.tailrec
 
 object KSmallestElementOfBST {
-  class TreeNode(_value: Int = 0, _left: TreeNode = null, _right: TreeNode = null) {
-    var value: Int = _value
-    var left: TreeNode = _left
-    var right: TreeNode = _right
-  }
-
-  object TreeNode {
-    def apply(value: Int): TreeNode = new TreeNode(value)
-    def apply(value: Int, left: TreeNode, right: TreeNode): TreeNode =
-      new TreeNode(value, left, right)
-  }
-
   def main(args: Array[String]): Unit = {
     val root: TreeNode = TreeNode(3,
       left = TreeNode(1, TreeNode(0), TreeNode(2)),

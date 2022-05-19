@@ -1,27 +1,9 @@
 package problems.medium
 
+import problems.common.TreeNode
 import scala.collection.mutable
 
 object LowestCommonAncestorBinaryTree {
-  class TreeNode(var _value: Int) {
-    var value: Int = _value
-    var left: TreeNode = null
-    var right: TreeNode = null
-  }
-
-  object TreeNode {
-    def apply(value: Int): TreeNode = {
-      new TreeNode(value)
-    }
-
-    def apply(value: Int, left: TreeNode, right: TreeNode): TreeNode = {
-      val tree = new TreeNode(value)
-      tree.left = left
-      tree.right = right
-      tree
-    }
-  }
-
   def main(args: Array[String]): Unit = {
     val tree: TreeNode =
       TreeNode(0,

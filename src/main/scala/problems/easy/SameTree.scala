@@ -1,18 +1,8 @@
 package problems.easy
 
+import problems.common.TreeNode
+
 object SameTree {
-  class TreeNode(_value: Int = 0, _left: TreeNode = null, _right: TreeNode = null) {
-    var value: Int = _value
-    var left: TreeNode = _left
-    var right: TreeNode = _right
-  }
-
-  object TreeNode {
-    def apply(): TreeNode = new TreeNode()
-    def apply(value: Int): TreeNode = new TreeNode(value)
-    def apply(value: Int, left: TreeNode, right: TreeNode): TreeNode = new TreeNode(value, left, right)
-  }
-
   def main(args: Array[String]): Unit = {
     val tree1 = TreeNode(5,
       left = TreeNode(4,
@@ -68,11 +58,11 @@ object SameTree {
 
   def isSameTree(p: TreeNode, q: TreeNode): Boolean = {
     if (p == null || q == null) {
-      return if (p == null && q == null) true else false
+      if (p == null && q == null) true else false
+    } else if ((p.left == null && p.right == null) || (q.left == null && q.right == null)) {
+      if ((p.left == null && p.right == null) && (q.left == null && q.right == null) && p.value == q.value) true else false
+    } else {
+      isSameTree(p.left, q.left) && isSameTree(p.right, q.right) && p.value == q.value
     }
-    if ((p.left == null && p.right == null) || (q.left == null && q.right == null)) {
-      return if ((p.left == null && p.right == null) && (q.left == null && q.right == null) && p.value == q.value) true else false
-    }
-    isSameTree(p.left, q.left) && isSameTree(p.right, q.right) && p.value == q.value
   }
 }

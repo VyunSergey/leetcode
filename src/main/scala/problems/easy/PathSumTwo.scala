@@ -1,18 +1,8 @@
 package problems.easy
 
+import problems.common.TreeNode
+
 object PathSumTwo {
-  class TreeNode(_value: Int = 0, _left: TreeNode = null, _right: TreeNode = null) {
-    var value: Int = _value
-    var left: TreeNode = _left
-    var right: TreeNode = _right
-  }
-
-  object TreeNode {
-    def apply(): TreeNode = new TreeNode()
-    def apply(value: Int): TreeNode = new TreeNode(value)
-    def apply(value: Int, left: TreeNode, right: TreeNode): TreeNode = new TreeNode(value, left, right)
-  }
-
   def main(args: Array[String]): Unit = {
     val tree = TreeNode(5,
       left = TreeNode(4,
