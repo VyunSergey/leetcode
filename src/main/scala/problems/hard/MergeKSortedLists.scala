@@ -1,18 +1,16 @@
 package problems.hard
 
-object MergeKSortedLists {
-  class ListNode(_x: Int = 0, _next: ListNode = null) {
-    var next: ListNode = _next
-    var x: Int = _x
-  }
+import problems.common.ListNode
+import scala.annotation.tailrec
 
-  @scala.annotation.tailrec
+object MergeKSortedLists {
+  @tailrec
   def toList(ln: ListNode, acc: List[Int] = Nil): List[Int] = {
     if (ln == null) acc
     else toList(ln.next, acc :+ ln.x)
   }
 
-  @scala.annotation.tailrec
+  @tailrec
   def toListNode(ll: List[Int], acc: ListNode = null): ListNode = {
     if (ll.isEmpty) acc
     else toListNode(ll.tail, new ListNode(ll.head, acc))
@@ -27,7 +25,7 @@ object MergeKSortedLists {
       (head, tail)
     }
 
-    @scala.annotation.tailrec
+    @tailrec
     def inner(arr: Array[ListNode], acc: ListNode = null): ListNode = {
       if (arr.isEmpty) acc
       else {

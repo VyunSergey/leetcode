@@ -1,11 +1,8 @@
 package problems.easy
 
-object MergeTwoSortedLists {
-  class ListNode(_x: Int = 0, _next: ListNode = null) {
-    var next: ListNode = _next
-    var x: Int = _x
-  }
+import problems.common.ListNode
 
+object MergeTwoSortedLists {
   def main(args: Array[String]): Unit = {
     val l1 = toListNode(Console.in.readLine.split(" ")
       .filter(_.nonEmpty).map(x => scala.util.Try(x.toInt).toOption).collect{case Some(x) => x}.toList.reverse)
