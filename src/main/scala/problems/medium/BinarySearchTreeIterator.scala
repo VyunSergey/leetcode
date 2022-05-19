@@ -7,8 +7,9 @@ import scala.collection.mutable
 
 object BinarySearchTreeIterator {
   class BSTIterator(_root: TreeNode) {
-
     private val lens = mutable.HashMap.empty[Int, Int]
+    private val ln = len(_root)
+    private var ind = 0
 
     final private def len(node: TreeNode): Int = {
       if (node != null) {
@@ -30,9 +31,6 @@ object BinarySearchTreeIterator {
         else node.value
       } else -1
     }
-
-    private val ln = len(_root)
-    private var ind = 0
 
     def next(): Int = {
       val res = find(_root, ind)
