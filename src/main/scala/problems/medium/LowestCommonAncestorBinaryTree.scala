@@ -20,13 +20,24 @@ object LowestCommonAncestorBinaryTree {
             null, TreeNode(10, null, TreeNode(12, null, null)))
         )
       )
-    val p = Console.in.readLine().toInt
-    val q = Console.in.readLine().toInt
+    val Array(p, q) = Console.in.readLine().split(" ").map(_.toInt).take(2)
     val res: TreeNode = lowestCommonAncestor(tree, TreeNode(p), TreeNode(q))
     println(res.value)
   }
 
   def lowestCommonAncestor(root: TreeNode, p: TreeNode, q: TreeNode): TreeNode = {
+    if (root == null || root.value == p.value || root.value == q.value) root
+    else {
+      val left = lowestCommonAncestor(root.left, p, q)
+      val right = lowestCommonAncestor(root.right, p, q)
+      if (left != null && right != null) root
+      else if (left != null) left
+      else if (right != null) right
+      else null
+    }
+  }
+
+  def lowestCommonAncestorTwo(root: TreeNode, p: TreeNode, q: TreeNode): TreeNode = {
     val buffP = mutable.ArrayBuffer.empty[Int]
     val buffQ = mutable.ArrayBuffer.empty[Int]
     val buffT = mutable.ArrayBuffer.empty[TreeNode]
