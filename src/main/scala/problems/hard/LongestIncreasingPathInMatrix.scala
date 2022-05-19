@@ -13,41 +13,41 @@ object LongestIncreasingPathInMatrix {
   }
 
   def longestIncreasingPath(matrix: Array[Array[Int]]): Int = {
-    if (matrix.isEmpty) return 0
-
-    val n = matrix.length
-    val m = matrix.head.length
+    val m = matrix.length
+    val n = matrix.head.length
+    val directions = List((-1, 0), (1, 0), (0, -1), (0, 1))
+    implicit val ordering: Ordering[(Int, (Int, Int))] = Ordering.by(_._1)
+    val queue = mutable.PriorityQueue.empty[(Int, (Int, Int))]
+    val dp = Array.fill(m)(Array.fill(n)(0))
     var maxLen = 0
 
-    implicit val queueOrdering: Ordering[((Int, Int), Int)] =
-      Ordering.by[((Int, Int), Int), Int] { case (_, x) => x }
-    val queue = mutable.PriorityQueue.empty[((Int, Int), Int)]
-
-    (0 until n).foreach { i =>
-      (0 until m).foreach { j =>
-        queue.enqueue(((i, j), matrix(i)(j)))
+    (0 until m).foreach { i =>
+      (0 until n).foreach { j =>
+        queue.enqueue((matrix(i)(j), (i, j)))
       }
     }
 
-    val dp = Array.fill(n)(new Array[Int](m))
-    val directions = Array((-1, 0), (1, 0), (0, -1), (0, 1))
-
-    while (queue.nonEmpty) {
-      // println(s"queue size=${queue.size}")
-      val ((i, j), _) = queue.dequeue
-      // println(s"point=${(i, j)} maxLen=$maxLen")
-      dp(i)(j) = 1
-      directions.map { case (dx, dy) => (i + dx, j + dy) }
-        .filter { case (k, l) =>
-          (0 <= k && k < n) &&
-            (0 <= l && l < m) &&
-            matrix(i)(j) < matrix(k)(l)
-        }
-        .foreach { case (k, l) =>
-          dp(i)(j) = Math.max(dp(i)(j), dp(k)(l) + 1)
-        }
-      maxLen = Math.max(maxLen, dp(i)(j))
+    def next(x: Int, y: Int): List[(Int, Int)] = {
+      for {
+        (dx, dy) <- directions if
+          (0 <= x + dx) && (x + dx < m) &&
+          (0 <= y + dy) && (y + dy < n) &&
+          (matrix(x)(y) < matrix(x + dx)(y + dy))
+      } yield {
+        (x + dx, y + dy)
+      }
     }
+
+    while(queue.nonEmpty) {
+      // println(s"size=${queue.size} max=$max")
+      val (_, (i, j)) = queue.dequeue
+      dp(i)(j) = 1
+      next(i, j).foreach { case (k, l) =>
+        dp(i)(j) = Math.max(dp(i)(j), dp(k)(l) + 1)
+      }
+      maxLen = Math.max(dp(i)(j), maxLen)
+    }
+
     maxLen
   }
 }
