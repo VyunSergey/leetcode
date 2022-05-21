@@ -24,4 +24,16 @@ object TopKFrequentElements {
     }
     top.toArray
   }
+
+  def topKFrequentTwo(nums: Array[Int], k: Int): Array[Int] = {
+    val res = mutable.ArrayBuffer.empty[Int]
+    val map = nums.groupMapReduce(identity)(_ => 1)(_ + _)
+    val ordering: Ordering[Int] = Ordering.by(n => map(n))
+    val queue = mutable.PriorityQueue.from(nums.toSet)(ordering)
+
+    (0 until k).foreach { _ =>
+      res += queue.dequeue
+    }
+    res.toArray
+  }
 }
